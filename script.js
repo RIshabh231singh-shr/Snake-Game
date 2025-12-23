@@ -81,7 +81,29 @@ function removesnake() {
     board.children[index].classList.remove("snake");
   });
 }
-
+function collision(newHead, direction, head) {
+  //selfcollision
+  if (snake.includes(newHead)) {
+    gameOver();
+  }
+  //wall collisions
+  //left wall
+  if (direction === "LEFT" && head % col === 0) {
+    return gameOver();
+  }
+  //right wall
+  if (direction === "RIGHT" && head % col === col - 1) {
+    return gameOver();
+  }
+  //top wall
+  if (direction === "UP" && head < col) {
+    return gameOver();
+  }
+  //bottom wall
+  if (direction === "DOWN" && head >= totalcells - col) {
+    return gameOver();
+  }
+}
 function movesnake() {
   const head = snake[snake.length - 1];
   let newHead;
@@ -95,6 +117,9 @@ function movesnake() {
     newHead = head - col;
   }
 
+  //Adding wall collision and self collision
+  collision(newHead, direction, head);
+
   removesnake();
   snake.push(newHead);
   if (newHead === foodindex) {
@@ -106,4 +131,8 @@ function movesnake() {
   drawsnake();
 }
 
-setInterval(movesnake,300); //set interval callback function le ya direct fuction ka naam baat same hai
+const gameInterval = setInterval(movesnake, 200); //set interval callback function le ya direct fuction ka naam baat same hai
+function gameOver() {
+  clearInterval(gameInterval);
+  alert("Game Over");
+}
