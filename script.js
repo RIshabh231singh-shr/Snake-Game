@@ -6,12 +6,22 @@ const score = document.createElement("div");
 score.className = "score";
 score.textContent = "Score : 0";
 
-const time = document.createElement("div");
-time.className = "time";
-time.textContent = "Time 00 : 00";
+const reset = document.createElement("button");
+reset.className = "reset";
+reset.textContent = "Reset";
+
+let Score = 0;
+let HighScore = 0;
+function ChangeScore() {
+  if (Score > HighScore) {
+    HighScore = Score;
+  }
+  highscore.textContent = `High Score : ${HighScore}`;
+  score.textContent = `Score : ${Score}`;
+}
 
 const details = document.getElementById("details");
-details.append(highscore, score, time);
+details.append(highscore, score, reset);
 
 //giving border for the better visiblity
 
@@ -84,26 +94,28 @@ function removesnake() {
 function collision(newHead, direction, head) {
   //selfcollision
   if (snake.includes(newHead)) {
-    gameOver();
+    return true;
   }
   //wall collisions
   //left wall
   if (direction === "LEFT" && head % col === 0) {
-    return gameOver();
+    return true;
   }
   //right wall
   if (direction === "RIGHT" && head % col === col - 1) {
-    return gameOver();
+    return true;
   }
   //top wall
   if (direction === "UP" && head < col) {
-    return gameOver();
+    return true;
   }
   //bottom wall
   if (direction === "DOWN" && head >= totalcells - col) {
-    return gameOver();
+    return true;
   }
+  return false;
 }
+
 function movesnake() {
   const head = snake[snake.length - 1];
   let newHead;
@@ -118,12 +130,17 @@ function movesnake() {
   }
 
   //Adding wall collision and self collision
-  collision(newHead, direction, head);
+  if (collision(newHead, direction, head)) {
+    gameOver();
+    return;
+  }
 
   removesnake();
   snake.push(newHead);
   if (newHead === foodindex) {
     removefood();
+    Score++;
+    ChangeScore();
     generatefood();
   } else {
     snake.shift();
@@ -131,10 +148,38 @@ function movesnake() {
   drawsnake();
 }
 
-const gameInterval = setInterval(movesnake, 200); //set interval callback function le ya direct fuction ka naam baat same hai
+let gameInterval = setInterval(movesnake, 200); //set interval callback function le ya direct fuction ka naam baat same hai
 function gameOver() {
   clearInterval(gameInterval);
   alert("Game Over");
 }
 
+//adding functionalities of reset
 
+reset.addEventListener("click", function () {
+  // stop game
+  clearInterval(gameInterval);
+
+  // reset values
+  Score = 0;
+  direction = "DOWN";
+  let speed = 200;
+
+  // update UI
+  ChangeScore();
+
+  // clear board
+  document.querySelectorAll(".cell").forEach(function (cell) {
+    cell.classList.remove("snake", "food");
+  });
+
+  // reset snake
+  snake = [42, 43, 44];
+  drawsnake();
+
+  // new food
+  generatefood();
+
+  // restart game
+  gameInterval = setInterval(movesnake, speed);
+});

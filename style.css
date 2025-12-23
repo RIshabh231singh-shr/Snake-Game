@@ -1,57 +1,61 @@
-*{
-    margin: 0px;
-    padding:0px;
-    box-sizing: border-box;
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
 }
-body{
-    height: 100vh;
-    color: white;
-    background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+body {
+  height: 100vh;
+  color: white;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-#frame{
-    border: 1px solid white;
-    height: 90vh;
-    width: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column; 
+#frame {
+  border: 1px solid white;
+  height: 90vh;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
-#details{
-    height:15vh;
-    width: 90%;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+#details {
+  height: 15vh;
+  width: 90%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-.highscore{
-    font-size: 30px;
+.highscore {
+  font-size: 30px;
 }
-.score{
-    font-size: 30px;
+.score {
+  font-size: 30px;
 }
-.time{
-    font-size: 30px;
+.reset {
+  font-size: 25px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 3px;
 }
-#gamearea{
-    border: 3px solid white;
-    width: 90%;
-    height: 70vh;
-    display: grid;
-    grid-template-columns: repeat(30,1fr);
-    grid-template-rows: repeat(20,1fr);
+.reset:hover {
+  background-color: gray;
 }
-.cell{
-    border: 1px solid white;
+#gamearea {
+  border: 3px solid white;
+  width: 90%;
+  height: 70vh;
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  grid-template-rows: repeat(20, 1fr);
 }
 
-.snake{
-    background: limegreen;
+.snake {
+  background: limegreen;
 }
-.food{
-    background-color: pink;
+.food {
+  background-color: pink;
 }
