@@ -136,3 +136,5 @@ function gameOver() {
   clearInterval(gameInterval);
   alert("Game Over");
 }
+
+
