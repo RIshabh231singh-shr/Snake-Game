@@ -152,35 +152,40 @@ function movesnake() {
 let gameInterval = setInterval(movesnake, 200); //set interval callback function le ya direct fuction ka naam baat same hai
 function gameOver() {
   clearInterval(gameInterval);
-  alert("Game Over");
+  document.getElementById("gameOverOverlay").classList.remove("hidden");
 }
 
 //adding functionalities of reset
-
-reset.addEventListener("click", function () {
+function restart() {
   // stop game
   clearInterval(gameInterval);
+
+  // hide game over card
+  document.getElementById("gameOverOverlay").classList.add("hidden");
 
   // reset values
   Score = 0;
   direction = "DOWN";
-  let speed = 200;
 
   // update UI
   ChangeScore();
 
   // clear board
-  document.querySelectorAll(".cell").forEach(function (cell) {
-    cell.classList.remove("snake", "food");
+  document.querySelectorAll(".cell").forEach((cell) => {
+    cell.classList.remove("snake", "snakehead", "food");
   });
 
   // reset snake
   snake = [42, 43, 44];
   drawsnake();
 
-  // new food
+  // generate new food
   generatefood();
 
   // restart game
-  gameInterval = setInterval(movesnake, speed);
-});
+  gameInterval = setInterval(movesnake, 200);
+}
+
+reset.addEventListener("click", restart);
+
+document.getElementById("restartBtn").addEventListener("click", restart);
