@@ -85,10 +85,12 @@ function drawsnake() {
   snake.forEach((index) => {
     board.children[index].classList.add("snake");
   });
+  const headIndex = snake[snake.length - 1];
+  board.children[headIndex].classList.add("snakehead");
 }
 function removesnake() {
   snake.forEach((index) => {
-    board.children[index].classList.remove("snake");
+    board.children[index].classList.remove("snake", "snakehead");
   });
 }
 function collision(newHead, direction, head) {
@@ -134,7 +136,6 @@ function movesnake() {
     gameOver();
     return;
   }
-
   removesnake();
   snake.push(newHead);
   if (newHead === foodindex) {

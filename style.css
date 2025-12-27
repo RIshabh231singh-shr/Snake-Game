@@ -52,10 +52,14 @@ body {
   grid-template-columns: repeat(30, 1fr);
   grid-template-rows: repeat(20, 1fr);
 }
-
 .snake {
   background: limegreen;
+  border-radius: 8px;
+}
+.snakehead {
+  background-color: #00ffcc;
 }
 .food {
   background-color: pink;
+  border-radius: 50%;
 }
