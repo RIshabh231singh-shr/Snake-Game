@@ -1,24 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Snake Game</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div id="frame">
-      <div id="details"></div>
-      <div id="gamearea"></div>
-    </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Neon Snake | Advanced Retro Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  
+  <div class="background-grid"></div>
 
-    <div id="gameOverOverlay" class="overlay hidden">
-      <div class="gameover-card">
-        <h1>Game Over</h1>
-        <p id="finalScore">Score: 0</p>
-        <button id="restartBtn">Restart</button>
+  <div class="game-container">
+    
+    <!-- Header: Scores -->
+    <header class="glass-panel header-panel">
+      <div class="score-card">
+        <span class="label">SCORE</span>
+        <span class="value space-mono text-glow" id="currentScore">0</span>
+      </div>
+      <div class="score-card">
+        <span class="label">HIGH SCORE</span>
+        <span class="value space-mono" id="highScore">0</span>
+      </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="canvas-wrapper glass-panel">
+      <!-- We use fixed resolution but scale securely with CSS -->
+      <canvas id="gameCanvas" width="600" height="600"></canvas>
+      
+      <!-- Overlays (Pause / Game Over) -->
+      <div id="gameOverlay" class="overlay hidden">
+        <div class="modal-content glass-panel glow-panel">
+          <h1 id="overlayTitle" class="outfit-bold gradient-text text-glow">GAME OVER</h1>
+          <div class="modal-stats space-mono" id="modalStats">
+            <p>Score: <span id="finalScore" class="text-glow">0</span></p>
+          </div>
+          <button id="modalBtn" class="primary-btn">RESTART</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Settings & Desktop Controls -->
+    <aside class="glass-panel controls-panel">
+      <div class="control-group">
+        <button id="pauseBtn" class="icon-btn" title="Pause/Resume (Space)">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <button id="resetBtn" class="icon-btn" title="Restart Game">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+        </button>
+        <button id="soundBtn" class="icon-btn active" title="Toggle Sound">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </button>
+      </div>
+      
+      <div class="speed-selector">
+        <span class="label">SPEED</span>
+        <div class="toggle-group" id="speedToggleGroup">
+          <button class="toggle-btn" data-speed="slow">1X</button>
+          <button class="toggle-btn active" data-speed="normal">2X</button>
+          <button class="toggle-btn" data-speed="fast">3X</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile D-Pad (only visible on small screens / touch devices) -->
+    <div class="mobile-dpad">
+      <div class="dpad-row">
+        <button class="dpad-btn" id="dpadUp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>
+        </button>
+      </div>
+      <div class="dpad-row">
+        <button class="dpad-btn" id="dpadLeft">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 7l-5 5 5 5z"/></svg>
+        </button>
+        <div class="dpad-center"></div>
+        <button class="dpad-btn" id="dpadRight">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 17l5-5-5-5z"/></svg>
+        </button>
+      </div>
+      <div class="dpad-row">
+        <button class="dpad-btn" id="dpadDown">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
       </div>
     </div>
-  </body>
+
+  </div>
+
   <script src="script.js"></script>
+</body>
 </html>
