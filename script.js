@@ -41,8 +41,19 @@ let food = null;
 let direction = { x: 0, y: -1 };
 let nextDirection = { x: 0, y: -1 }; // Prevent rapid reverse-suicide
 let score = 0;
-let highScore = localStorage.getItem('snakeHighScore') || 0;
+let highScore = 0;
+try {
+  highScore = localStorage.getItem('snakeHighScore') || 0;
+} catch(e) {
+  console.log("localStorage blocked - running without saves");
+}
 highScoreEl.innerText = highScore;
+
+const COLORS = {
+  head: '#00f3ff',
+  body: '#00b8ff',
+  food: '#ff0055'
+};
 
 let lastTime = 0;
 let renderDelta = 0;
@@ -284,7 +295,9 @@ function updateScore(add) {
   if (score > highScore) {
     highScore = score;
     highScoreEl.innerText = highScore;
-    localStorage.setItem('snakeHighScore', highScore);
+    try {
+      localStorage.setItem('snakeHighScore', highScore);
+    } catch(e) {}
   }
   
   // Auto-increase speed slightly based on score for dynamic difficulty
@@ -373,15 +386,15 @@ function drawSnake() {
     // Head vs Body coloring
     const isHead = index === 0;
     
-    ctx.fillStyle = isHead ? 'var(--snake-head)' : 'var(--snake-body)';
+    ctx.fillStyle = isHead ? COLORS.head : COLORS.body;
     
     // Add glow to head
     if (isHead) {
       ctx.shadowBlur = 15;
-      ctx.shadowColor = 'var(--snake-head)';
+      ctx.shadowColor = COLORS.head;
     } else {
       ctx.shadowBlur = 5;
-      ctx.shadowColor = 'var(--snake-body)';
+      ctx.shadowColor = COLORS.body;
       // Tail fade
       ctx.globalAlpha = 1 - (index / (snake.length + 5));
     }
@@ -439,10 +452,10 @@ function drawFood(time) {
   
   // Glow effect
   ctx.shadowBlur = 20;
-  ctx.shadowColor = 'var(--food-color)';
+  ctx.shadowColor = COLORS.food;
   
   // Draw diamond apple
-  ctx.fillStyle = 'var(--food-color)';
+  ctx.fillStyle = COLORS.food;
   ctx.beginPath();
   let size = (TILE_SIZE / 2) - 4;
   ctx.moveTo(0, -size);
